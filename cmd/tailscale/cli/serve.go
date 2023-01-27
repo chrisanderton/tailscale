@@ -440,8 +440,6 @@ func expandProxyTarget(target string) (string, error) {
 	switch host {
 	case "localhost", "127.0.0.1":
 		host = "127.0.0.1"
-	default:
-		return "", fmt.Errorf("only localhost or 127.0.0.1 proxies are currently supported")
 	}
 	url := u.Scheme + "://" + host
 	if u.Port() != "" {
@@ -485,10 +483,6 @@ func (e *serveEnv) handleTCPServe(ctx context.Context, srvPort uint16, target st
 	switch host {
 	case "localhost", "127.0.0.1":
 		// ok
-	default:
-		fmt.Fprintf(os.Stderr, "error: invalid TCP target %q\n", target)
-		fmt.Fprint(os.Stderr, "must be one of: localhost or 127.0.0.1\n\n", target)
-		return flag.ErrHelp
 	}
 
 	if p, err := strconv.ParseUint(targetPortStr, 10, 16); p == 0 || err != nil {
@@ -505,7 +499,7 @@ func (e *serveEnv) handleTCPServe(ctx context.Context, srvPort uint16, target st
 		sc = new(ipn.ServeConfig)
 	}
 
-	fwdAddr := "127.0.0.1:" + targetPortStr
+	fwdAddr := host + ":" + targetPortStr
 
 	if sc.IsServingWeb(srvPort) {
 		return fmt.Errorf("cannot serve TCP; already serving web on %d", srvPort)
