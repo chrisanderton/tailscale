@@ -1,10 +1,16 @@
 # Tailscale
 
-## Franken-monster testing out [PR6521](https://github.com/tailscale/tailscale/pull/6521)
-
 https://tailscale.com
 
 Private WireGuard® networks made easy
+
+
+## Franken-monster testing out [PR6521](https://github.com/tailscale/tailscale/pull/6521)
+
+Proxy to other container running https; works with IP but not hostname.
+
+```tailscale serve tcp+tls:443 tcp+tls://192.168.48.2:443`
+
 
 ## Overview
 
